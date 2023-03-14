@@ -41,4 +41,7 @@ const userSchema=new mongoose.Schema({
     resetPasswordExpire:Date
 })
 
+// //Encrypting before saving user
+// userSchema.pre('save')
+
 export default mongoose.model('User',userSchema);
