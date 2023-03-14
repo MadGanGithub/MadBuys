@@ -1,5 +1,6 @@
 import Product from "../models/product.js";
 import product from "../data/productData.json" assert{type:"json"};
+import Features from "../utils/features.js";
 
 
 //This api adds a new product
@@ -16,7 +17,10 @@ const newProduct=async(req,res,next)=>{
 //This api diplays all the products
 const getProducts=async(req,res,next)=>{
 
-    const display=await Product.find()
+    const itemsPerPage=5;
+
+    const search=new Features(Product.find(),req.query).search().pagination(itemsPerPage)
+    const display=await search.query;
 
     res.json({message:"This routes controller handles product based actions",
 
@@ -45,7 +49,7 @@ const findProduct=async(req,res,next)=>{
 //This api updates a particular data by id
 const updateProduct=async(req,res,next)=>{
 
-    console.log("askjdfh")
+    
     //why let instead of const? we modify it below
     let found=await Product.findById(req.params.id)
 
